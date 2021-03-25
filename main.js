@@ -10,7 +10,7 @@ var app = new Vue({
       './img/4.jpg',
       './img/5.jpg'
     ],
-    timer: null,
+    timer: '',
   },
   //aggiungere questo per rendere lo slide automatico,
   //senza dover premere alcun bottone
@@ -20,7 +20,10 @@ var app = new Vue({
   // },
 
   methods: {
-    next: function (){
+    next: function (e){
+      // if (e && e.type == "click") {
+      //   clearInterval(this.timer);
+      // }
       if (this.index < this.arrayImg.length - 1) {
         this.index ++;
       } else {
@@ -39,12 +42,22 @@ var app = new Vue({
     },
     //function per fare lo slider automatico
     startSlide: function() {
-    this.timer = setInterval(this.next, 1000);
+      // this.timer = setInterval(this.timer);
+      // let _self = this
+    if (!this.timer) {
+      this.timer = setInterval(() => {
+        this.next();
+      }, 1000);
+    } else {
+      clearInterval(this.timer);
+      this.timer = clearInterval(this.timer);
+    }
+      // _self.next(true);
    },
     //function per fermare lo slider automatico
-    stopSlide: function() {
-    this.timer = clearInterval(this.timer);
-  },
+  //   stopSlide: function() {
+  //   this.timer = clearInterval(this.timer);
+  // },
   }
 
 });
